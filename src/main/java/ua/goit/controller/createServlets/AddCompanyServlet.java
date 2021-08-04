@@ -1,7 +1,6 @@
 package ua.goit.controller.createServlets;
 
 import ua.goit.dto.CompanyDTO;
-import ua.goit.service.CompanyService;
 import ua.goit.service.HibernateCompanyService;
 
 import javax.servlet.ServletException;

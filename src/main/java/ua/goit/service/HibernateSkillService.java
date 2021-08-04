@@ -1,13 +1,47 @@
 package ua.goit.service;
 
-import ua.goit.dao.HibernateCompanyDAO;
-import ua.goit.dao.model.Company;
+import ua.goit.dao.HibernateSkillDAO;
+import ua.goit.dao.model.Skill;
 import ua.goit.view.Util;
 
 import java.util.List;
 
-public class HibernateCompanyService implements HibernateService<Company>{
-    private final HibernateCompanyDAO dao = new HibernateCompanyDAO();
+public class HibernateSkillService implements HibernateService<Skill>{
+    private final HibernateSkillDAO dao = new HibernateSkillDAO();
+
+    @Override
+    public String create(Skill entity) {
+        try {
+            dao.create(entity);
+            return "Your request has been processed successfully";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "An error has occurred, please resend the request";
+        }
+    }
+
+    @Override
+    public String delete(Skill entity) {
+        try {
+            dao.delete(entity);
+            return "Your request has been processed successfully";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "An error has occurred, please resend the request";
+        }
+    }
+
+    @Override
+    public String update(Skill entity) {
+        try {
+            dao.update(entity);
+            return dao.findById(entity.getSkill_id()).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "An error has occurred, please resend the request";
+        }
+
+    }
 
     @Override
     public String findById(Integer id) {
@@ -20,46 +54,14 @@ public class HibernateCompanyService implements HibernateService<Company>{
     }
 
     @Override
-    public String create(Company company) {
-        try {
-            dao.create(company);
-            return "Your request has been processed successfully";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "An error has occurred, please resend the request";
-        }
-    }
-
-    @Override
-    public String update(Company company) {
-        try {
-            dao.update(company);
-            return dao.findById(company.getCompany_id()).toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "An error has occurred, please resend the request";
-        }
-    }
-
-    @Override
-    public String delete(Company company){
-        try {
-            dao.delete(company);
-            return "Your request has been processed successfully";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "An error has occurred, please resend the request";
-        }
-    }
-
-    @Override
     public String getAll() {
         try {
-            List<Company> companies = dao.getAll();
-            return Util.joinListElements(companies);
+            List<Skill> skills = dao.getAll();
+            return Util.joinListElements(skills);
         } catch (Exception e){
             e.printStackTrace();
             return "An error has occurred, please resend the request";
         }
+
     }
 }

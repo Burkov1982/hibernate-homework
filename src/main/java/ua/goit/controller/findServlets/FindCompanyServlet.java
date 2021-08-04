@@ -1,7 +1,6 @@
 package ua.goit.controller.findServlets;
 
 import ua.goit.dto.CompanyDTO;
-import ua.goit.service.CompanyService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

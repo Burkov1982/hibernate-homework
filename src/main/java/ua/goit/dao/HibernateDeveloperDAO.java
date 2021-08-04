@@ -3,30 +3,28 @@ package ua.goit.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ua.goit.config.HibernateDatabaseConnector;
-import ua.goit.dao.model.Company;
+import ua.goit.dao.model.Developer;
 
 import java.util.List;
 
-public class HibernateCompanyDAO implements HibernateDAO<Company>{
+public class HibernateDeveloperDAO implements HibernateDAO<Developer>{
     private final SessionFactory sessionFactory = HibernateDatabaseConnector.getSessionFactory();
 
     @Override
-    public Company findById(Integer id) throws Exception{
-        Company company = null;
+    public Developer findById(Integer id) throws Exception {
         try (Session session = sessionFactory.openSession()) {
-            company = session.get(Company.class, id);
-            System.out.println(company.toString());
+            return session.get(Developer.class, id);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return company;
+        return null;
     }
 
     @Override
-    public void create(Company company) throws Exception {
+    public void create(Developer entity) throws Exception {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.saveOrUpdate(company);
+            session.saveOrUpdate(entity);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,21 +32,10 @@ public class HibernateCompanyDAO implements HibernateDAO<Company>{
     }
 
     @Override
-    public void update(Company company) throws Exception{
-            try (Session session = sessionFactory.openSession()) {
-                session.beginTransaction();
-                session.saveOrUpdate(company);
-                session.getTransaction().commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    @Override
-    public void delete(Company company) throws Exception{
+    public void update(Developer entity) throws Exception {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.delete(company);
+            session.saveOrUpdate(entity);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,9 +43,20 @@ public class HibernateCompanyDAO implements HibernateDAO<Company>{
     }
 
     @Override
-    public List<Company> getAll() throws Exception{
+    public void delete(Developer entity) throws Exception {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("SELECT a FROM Company a", Company.class).getResultList();
+            session.beginTransaction();
+            session.delete(entity);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Developer> getAll() throws Exception {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("SELECT a FROM Developer a", Developer.class).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
